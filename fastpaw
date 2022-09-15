@@ -1,0 +1,19 @@
+int fastpaw(long long int a,long long int b){
+	if(b==0)
+      return 1;	
+	int c=fastpaw(a,b/2);
+	 c=c*c;
+	 if(b%2==1){
+	  c=c*a;
+  }
+	  return c;
+	}
+
+int main(){
+	long long int  a,b,c;
+	cin >> a;
+	cin >> b;
+	c=fastpaw(a,b);
+	cout << c;
+	return 0;
+	}
