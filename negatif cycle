@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+#define int ll
+ 
+typedef long long ll;
+ 
+typedef tuple<int, int, int> iii;
+ 
+typedef vector<bool> vb;
+typedef vector<int> vi;
+ 
+typedef vector<iii> viii;
+ 
+const int INF = 1e15;
+ 
+ 
+ 
+int32_t main()
+{
+    int n, m;
+    cin >> n >> m;
+ 
+    vector<iii> edges;
+    vector<int> dist(n, INF);
+    dist[0] = 0;
+    vector<int> pre(n, -1);
+ 
+    for(int i = 0; i < m; i++)
+    {
+        int a, b, w;
+        cin >> a >> b >> w;
+        a--; b--;
+        edges.push_back({a, b, w});
+    }
+ 
+    bool change = false;
+    int x;
+    for(int i = 0; i < n; i++)
+    {
+        change = false;
+        for(int j = 0; j < m; j++)
+        {
+            int a, b, w;
+            tie(a, b, w) = edges[j];
+            if(dist[a]+w < dist[b])
+            {
+                x = b;
+                change = true;
+                dist[b] = dist[a]+w;
+                pre[b] = a;
+            }
+        }
+ 
+        if(change == false) break;
+    }
+ 
+    if(change == false)
+    {
+        cout << "NO";
+        return 0;
+    }
+ 
+    int cur = x;
+    vector<bool> visited(n, false);
+    while(true)
+    {
+        if(visited[cur]) break;
+        visited[cur] = true;
+        cur = pre[cur];
+    }
+ 
+    x = cur;
+    vector<int> ans;
+    ans.push_back(x);
+    cur = pre[x];
+    while(cur != x)
+    {
+        ans.push_back(cur);
+        cur = pre[cur];
+    }
+    ans.push_back(x);
+ 
+    reverse(ans.begin(), ans.end());
+    cout << "YES\n";
+    for(auto x:ans) cout << x+1 << " ";
+}
